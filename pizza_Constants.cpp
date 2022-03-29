@@ -2,32 +2,33 @@
 
 // Created by Peter Gemmell
 // Created on March 2022
-// This program calculates the cost of pizza using constants
+// This program checks to see if the number guessed is the random number
 
 #include <iostream>
-#include <iomanip>
+#include <random>
+
 int main() {
-    // This function calculates the cost of a pizza
-    const float RENT = 1;
-    const float LABOUR = 0.75;
-    const float COST_PER_INCH = 0.5;
-    const float HST = 0.13;
+    // this program checks to see if the number guessed is the random number
+    int mysteryNumber;
+    int guessNumber;
 
-    float diameter;
-    float sub_total;
-    float total;
+    // input
+    std::cout << "Enter a number(between 0-9): ";
+    std::cin >> guessNumber;
 
-    // Input
-    std::cout << "What diameter pizza would you like? (inch): ";
-    std::cin >> diameter;
+    // process
+    std::random_device rseed;
+    std::mt19937 rgen(rseed());  // mersenne_twister
+    std::uniform_int_distribution<int> idist(0, 9);  // [0, 9]
+    mysteryNumber = idist(rgen);
 
-    // Process
-    sub_total = RENT + LABOUR + (diameter * COST_PER_INCH);
-    total = sub_total * (1 + HST);
-
-    // Output
-    std::cout << "The final cost is: $" << std::fixed
-    << std::setprecision(2) << std::setfill('0') << total << std::endl;
-    std::cout << std::endl;
-    std::cout << "Done." << std::endl;
+    if (mysteryNumber == guessNumber) {
+        // output
+        std::cout << "You guessed correctly!";
+    } else {
+        std::cout << "\nYou guessed incorrectly. Try again.";
+        std::cout << std::endl;
+        std::cout << "\nThe correct number was: " << mysteryNumber << std::endl;
+    }
+    std::cout << "\nDone." << std::endl;
 }
